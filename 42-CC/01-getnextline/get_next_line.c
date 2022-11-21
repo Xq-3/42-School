@@ -6,7 +6,7 @@
 /*   By: pfaria-d <pfaria-d@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/17 08:42:00 by pfaria-d          #+#    #+#             */
-/*   Updated: 2022/11/21 18:04:49 by pfaria-d         ###   ########.fr       */
+/*   Updated: 2022/11/21 22:12:55 by pfaria-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,13 +40,13 @@ char	*line_reader(int fd, char *line)
 	return (line);
 }
 
-char	*line_parser(char *line, int diff)
+char	*line_parser(char *line, int diff, char *buff)
 {
 	int	diff2;
 
 	diff2 = ft_strlen(ft_strchr(line, '\n'));
 	line = ft_substr(line, diff + 1, diff2);
-	if (ft_strlen(line) == 0)
+	if (ft_strlen(line) == 0 && ft_strchr(buff, '\n') == 0)
 		freee(line);
 	return (line);
 }
@@ -68,6 +68,6 @@ char	*get_next_line(int fd)
 	printf("%p\n", line);
 	buff = ft_substr(line, 0, diff + 1);
 	printf("%p\n", line);
-	line = line_parser(line, diff);
+	line = line_parser(line, diff, buff);
 	return (buff);
 }

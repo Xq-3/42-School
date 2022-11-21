@@ -6,7 +6,7 @@
 /*   By: pfaria-d <pfaria-d@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/17 08:41:58 by pfaria-d          #+#    #+#             */
-/*   Updated: 2022/11/21 17:49:19 by pfaria-d         ###   ########.fr       */
+/*   Updated: 2022/11/21 22:12:39 by pfaria-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ char	*ft_substr(const char *s, unsigned int start, size_t len);
 //GNL
 char	*get_next_line(int fd);
 char	*line_reader(int fd, char *line);
-char	*line_parser(char *line, int diff);
+char	*line_parser(char *line, int diff, char *buff);
 char	*ft_substr2(const char *s, unsigned int start, size_t len);
 
 # ifndef BUFFER_SIZE
