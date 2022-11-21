@@ -6,13 +6,13 @@
 #    By: pfaria-d <pfaria-d@student.42nice.fr>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/16 12:11:48 by pfaria-d          #+#    #+#              #
-#    Updated: 2022/11/16 12:13:17 by pfaria-d         ###   ########.fr        #
+#    Updated: 2022/11/21 22:16:20 by pfaria-d         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 
-SRC = ft_printf_nbrb.c ft_printf.c ft_printf_utils1.c
-SRCBONUS = 
+SRC = ./src/ft_printf_nbrb.c ./src/ft_printf.c ./src/ft_printf_utils1.c
+SRCBONUS = ./srcb/ft_printf_nbrb_bonus.c ./srcb/ft_printf_bonus.c ./srcb/ft_printf_utils1_bonus.c
 
 OBJS = $(SRC:.c=.o)
 
