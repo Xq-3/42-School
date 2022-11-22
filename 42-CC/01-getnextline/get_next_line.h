@@ -6,7 +6,7 @@
 /*   By: pfaria-d <pfaria-d@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/17 08:41:58 by pfaria-d          #+#    #+#             */
-/*   Updated: 2022/11/21 22:12:39 by pfaria-d         ###   ########.fr       */
+/*   Updated: 2022/11/22 22:28:49 by pfaria-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,20 +16,19 @@
 # include <stdlib.h>
 # include <string.h>
 # include <unistd.h>
-# include <stdio.h>
 
 //GNL utils
-char	*ft_strjoin(char const *s1, char const *s2);
+char	*ft_strjoin(char *s1, char *s2);
 void	freee(void *ptr);
-size_t	ft_strlen(const char *str);
-char	*ft_strchr(const char *str, int c);
-char	*ft_substr(const char *s, unsigned int start, size_t len);
+int		ft_strlen(char *str);
+int		ft_strchr(char *str, int c);
+char	*ft_substr(char *s, unsigned int start, size_t len);
 
 //GNL
 char	*get_next_line(int fd);
 char	*line_reader(int fd, char *line);
+char	*ft_substr2(const char *s, unsigned int start, int len, char *buff);
 char	*line_parser(char *line, int diff, char *buff);
-char	*ft_substr2(const char *s, unsigned int start, size_t len);
 
 # ifndef BUFFER_SIZE
 #  define BUFFER_SIZE 1
