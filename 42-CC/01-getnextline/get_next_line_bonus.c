@@ -6,7 +6,7 @@
 /*   By: pfaria-d <pfaria-d@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/17 08:42:00 by pfaria-d          #+#    #+#             */
-/*   Updated: 2022/11/22 22:33:55 by pfaria-d         ###   ########.fr       */
+/*   Updated: 2022/11/25 00:46:33 by pfaria-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,10 +88,7 @@ char	*get_next_line(int fd)
 
 	i = 0;
 	if (BUFFER_SIZE <= 0 || read(fd, 0, 0) < 0 || fd < 0)
-	{
-		free (line[fd]);
 		return (0);
-	}
 	line[fd] = line_reader(fd, line[fd]);
 	if (line[fd] == 0)
 		return (0);
