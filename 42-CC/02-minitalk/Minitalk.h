@@ -6,7 +6,7 @@
 /*   By: pfaria-d <pfaria-d@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/26 10:45:43 by pfaria-d          #+#    #+#             */
-/*   Updated: 2022/11/26 11:22:25 by pfaria-d         ###   ########.fr       */
+/*   Updated: 2022/11/28 13:35:58 by pfaria-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,8 @@
 # define MINITALK_H
 
 # include <unistd.h>
+# include <signal.h>
 # include "extra/extra.h"
-
-int		g_pid;
-char	*g_msg;
+# include <sys/types.h>
 
 #endif
