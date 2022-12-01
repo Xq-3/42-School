@@ -12,34 +12,36 @@
 
 #include "Minitalk.h"
 
-static int	problemtesting(int argc, char *argv)
+static int	problemtesting(int argc, int pid, char *argv)
 {
-	argv++;
 	if (argc != 3)
 	{
 		ft_printf("Unexpected number of arguments\n");
 		return (-1);
 	}
-/* 	if (kill(ft_atoi(argv), SIGUSR1) != 0)
+	if (ft_strlen(argv) == 0)
 	{
-		ft_printf("Wrong pid");
+		ft_printf("Invalid sentence\n");
 		return (-1);
-	} */
+	}
+	if (kill(pid, SIGINFO) != 0)
+	{
+		ft_printf("Wrong pid\n");
+		return (-1);
+	}
 	return (0);
 }
 
 void	charsender(int pid, char argv)
 {
 	int	i;
-	int	x;
 
-	x = 0;
 	i = 8;
 	while (i--)
 	{
-		if ((argv & 1) == 1)
+		if ((argv & 1))
 			kill(pid, SIGUSR1);
-		if ((argv & 1) == 0)
+		if (!(argv & 1))
 			kill(pid, SIGUSR2);
 		usleep(50);
 		argv = argv >> 1;
@@ -51,7 +53,7 @@ int	main(int argc, char **argv)
 	int	i;
 
 	i = 0;
-	if (problemtesting(argc, argv[1]) == -1)
+	if (problemtesting(argc, ft_atoi(argv[1]), argv[2]) == -1)
 		return (-1);
 	if (ft_atoi(argv[2]) == -1)
 	{
