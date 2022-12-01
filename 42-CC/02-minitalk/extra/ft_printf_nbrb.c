@@ -6,7 +6,7 @@
 /*   By: pfaria-d <pfaria-d@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/16 11:11:09 by pfaria-d          #+#    #+#             */
-/*   Updated: 2022/11/26 11:23:46 by pfaria-d         ###   ########.fr       */
+/*   Updated: 2022/11/29 11:11:46 by pfaria-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,11 +77,6 @@ int	ft_nbrp(unsigned long long int *nbr, int fd, char *base)
 	nb = (size_t)nbr;
 	if (nb == 0)
 		return (ft_putchar_fd(base[0], fd));
-	if (nb < 0 && verif_base(base) == 1)
-	{
-		ft_putchar_fd('-', fd);
-		nb *= -1;
-	}
 	while (nb > 0 && verif_base(base) == 1)
 	{
 		temp = nb % ft_strlen(base);
