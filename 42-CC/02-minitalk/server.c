@@ -6,60 +6,59 @@
 /*   By: pfaria-d <pfaria-d@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/25 17:54:27 by pfaria-d          #+#    #+#             */
-/*   Updated: 2022/12/01 16:54:13 by pfaria-d         ###   ########.fr       */
+/*   Updated: 2022/12/02 17:44:09 by pfaria-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Minitalk.h"
-#include <stdio.h>
 
-int	server(void)
+static void	siginfohandler(int sig)
 {
-	ft_printf("Server PID: %d\n", getpid());
-	while (1)
+	if (sig == SIGINFO)
 	{
-		usleep(500);
+		return ;
 	}
-	return (0);
 }
 
-void	test(int sig)
+static void	charprinter(int sig)
 {
+	static unsigned char	c = 0;
+	static int				i = 0;
+
 	if (sig == SIGUSR1)
-		ft_printf("1");
-	if (sig == SIGUSR2)
-		ft_printf("0");
-}
-
-char	charprinter(void)
-{
-	int				i;
-	int				x;
-	unsigned char	c;
-	int				z;
-
-	x = 0;
-	i = 8;
-	z = 256;
-	c = 0;
-	while (i--)
 	{
-		if (signal(SIGUSR1, test))
-			c += (2 * x);
-		if (signal(SIGUSR2, test))
-			c = c - 1 + 1;
-		if (x == 0)
-			x++;
+		if (i == 0)
+			c += 1;
 		else
-			x *= 2;
-		usleep(5000);
-		z /= 2;
+			c += (2 * i);
 	}
-	return (c);
+	if (i == 0)
+		i++;
+	else
+		i *= 2;
+	if (i >= 128)
+	{
+		i = 0;
+		ft_printf("%c", c);
+		c = 0;
+	}
+	usleep(100);
 }
 
 int	main(void)
 {
-	server();
+	struct sigaction	info;
+	struct sigaction	s;
+
+	ft_printf("Server PID: %d\n", getpid());
+	info.sa_handler = siginfohandler;
+	s.sa_handler = charprinter;
+	sigaction(SIGINFO, &info, NULL);
+	sigaction(SIGUSR1, &s, NULL);
+	sigaction(SIGUSR2, &s, NULL);
+	while (1)
+	{
+		pause();
+	}
 	return (0);
 }
