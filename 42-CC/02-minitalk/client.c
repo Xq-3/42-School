@@ -24,7 +24,7 @@ static int	problemtesting(int argc, int pid, char *argv)
 		ft_printf("Invalid sentence\n");
 		return (-1);
 	}
-	if (kill(pid, SIGINFO) != 0)
+	if (kill(pid, SIGIO) != 0)
 	{
 		ft_printf("Wrong pid\n");
 		return (-1);
@@ -32,28 +32,48 @@ static int	problemtesting(int argc, int pid, char *argv)
 	return (0);
 }
 
-static void	charsender(int pid, char argv)
+static void	charcounter(int sig)
 {
-	int	i;
+	static int	i;
+	static int	count;
 
 	i = 8;
 	while (i--)
 	{
-		usleep(300);
-		if ((argv & 1))
-			kill(pid, SIGUSR1);
-		if (!(argv & 1))
-			kill(pid, SIGUSR2);
-		argv = argv >> 1;
+		if (sig == SIGUSR1 || SIGUSR1)
+			count++;
+		if (count == 8)
+			ft_printf("Received");
 	}
-	usleep(300);
+}
+
+static void	charsender(int pid, char *argv)
+{
+	int		i;
+	int		x;
+	unsigned char	tmp;
+
+	x = 0;
+	while(argv[x])
+	{
+		tmp = argv[x];
+		i = 8;
+		while (i--)
+		{
+			if ((tmp & 1))
+				kill(pid, SIGUSR1);
+			if (!(tmp & 1))
+				kill(pid, SIGUSR2);
+			tmp = tmp >> 1;
+			pause();
+			usleep(10);
+		}
+		x++;
+	}
 }
 
 int	main(int argc, char **argv)
 {
-	int			i;
-
-	i = 0;
 	if (problemtesting(argc, ft_atoi(argv[1]), argv[2]) == -1)
 		return (-1);
 	if (ft_atoi(argv[2]) == -1)
@@ -61,12 +81,9 @@ int	main(int argc, char **argv)
 		kill(ft_atoi(argv[1]), SIGINT);
 		return (0);
 	}
-	while (argv[2][i])
-	{
-		charsender(ft_atoi(argv[1]), argv[2][i]);
-		i++;
-	}
-	usleep(100);
-	charsender(ft_atoi(argv[1]), '\n');
+	signal(SIGUSR1, charcounter);
+	signal(SIGUSR2, charcounter);
+	charsender(ft_atoi(argv[1]), argv[2]);
+	charsender(ft_atoi(argv[1]), "\n");
 	return (0);
 }

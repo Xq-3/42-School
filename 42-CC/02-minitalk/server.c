@@ -14,24 +14,30 @@
 
 static void	siginfohandler(int sig)
 {
-	if (sig == SIGINFO)
+	if (sig == SIGIO)
 	{
 		return ;
 	}
 }
 
-static void	charprinter(int sig)
+static void	charprinter(int sig, siginfo_t *siginfo, void *NUL)
 {
 	static unsigned char	c = 0;
-	static int				i = 0;
+	static int		i = 0;
+	static pid_t		pid = 0;
 
+	pid = siginfo->si_pid;
+	(void)NUL;
 	if (sig == SIGUSR1)
 	{
 		if (i == 0)
 			c += 1;
 		else
 			c += (2 * i);
+		kill(pid, SIGUSR1);
 	}
+	else
+		kill(pid, SIGUSR2);
 	if (i == 0)
 		i++;
 	else
@@ -42,7 +48,6 @@ static void	charprinter(int sig)
 		ft_printf("%c", c);
 		c = 0;
 	}
-	usleep(100);
 }
 
 int	main(void)
@@ -52,8 +57,9 @@ int	main(void)
 
 	ft_printf("Server PID: %d\n", getpid());
 	info.sa_handler = siginfohandler;
-	s.sa_handler = charprinter;
-	sigaction(SIGINFO, &info, NULL);
+	s.sa_sigaction = charprinter;
+	s.sa_flags = SIGIO;
+	sigaction(SIGIO, &info, NULL);
 	sigaction(SIGUSR1, &s, NULL);
 	sigaction(SIGUSR2, &s, NULL);
 	while (1)
