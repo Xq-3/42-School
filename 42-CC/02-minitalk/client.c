@@ -12,6 +12,8 @@
 
 #include "Minitalk.h"
 
+size_t	g_len;
+
 static int	problemtesting(int argc, int pid, char *argv)
 {
 	if (argc != 3)
@@ -34,17 +36,12 @@ static int	problemtesting(int argc, int pid, char *argv)
 
 static void	charcounter(int sig)
 {
-	static int	i;
-	static int	count;
+	static size_t	count = 0;
 
-	i = 8;
-	while (i--)
-	{
-		if (sig == SIGUSR1 || SIGUSR1)
-			count++;
-		if (count == 8)
-			ft_printf("Received");
-	}
+	if (sig == SIGUSR1)
+		count++;
+	if (count == (g_len * 8) + 8)
+		ft_printf("Received");
 }
 
 static void	charsender(int pid, char *argv)
@@ -60,13 +57,13 @@ static void	charsender(int pid, char *argv)
 		i = 8;
 		while (i--)
 		{
+			usleep(50);
 			if ((tmp & 1))
 				kill(pid, SIGUSR1);
 			if (!(tmp & 1))
 				kill(pid, SIGUSR2);
 			tmp = tmp >> 1;
 			pause();
-			usleep(10);
 		}
 		x++;
 	}
@@ -81,8 +78,8 @@ int	main(int argc, char **argv)
 		kill(ft_atoi(argv[1]), SIGINT);
 		return (0);
 	}
+	g_len = ft_strlen(argv[2]);
 	signal(SIGUSR1, charcounter);
-	signal(SIGUSR2, charcounter);
 	charsender(ft_atoi(argv[1]), argv[2]);
 	charsender(ft_atoi(argv[1]), "\n");
 	return (0);

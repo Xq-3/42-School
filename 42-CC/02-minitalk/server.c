@@ -34,10 +34,9 @@ static void	charprinter(int sig, siginfo_t *siginfo, void *NUL)
 			c += 1;
 		else
 			c += (2 * i);
-		kill(pid, SIGUSR1);
 	}
-	else
-		kill(pid, SIGUSR2);
+	usleep(60);
+	kill(pid, SIGUSR1);
 	if (i == 0)
 		i++;
 	else
