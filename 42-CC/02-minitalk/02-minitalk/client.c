@@ -6,7 +6,7 @@
 /*   By: pfaria-d <pfaria-d@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/25 17:54:24 by pfaria-d          #+#    #+#             */
-/*   Updated: 2022/12/06 13:32:43 by pfaria-d         ###   ########.fr       */
+/*   Updated: 2022/12/07 12:53:45 by pfaria-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,9 +26,9 @@ static void	charcounter(int sig)
 
 static void	charsender(int pid, char *argv)
 {
-	int				i;
-	int				x;
-	unsigned char	tmp;
+	int	i;
+	int	x;
+	int	tmp;
 
 	x = 0;
 	while (argv[x])
@@ -37,13 +37,13 @@ static void	charsender(int pid, char *argv)
 		i = 8;
 		while (i--)
 		{
-			usleep(60);
+			usleep(400);
 			if ((tmp & 1))
 				kill(pid, SIGUSR1);
-			if (!(tmp & 1))
+			else
 				kill(pid, SIGUSR2);
 			tmp = tmp >> 1;
-			pause();
+			usleep(400);
 		}
 		x++;
 	}

@@ -6,7 +6,7 @@
 /*   By: pfaria-d <pfaria-d@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/16 09:58:46 by pfaria-d          #+#    #+#             */
-/*   Updated: 2022/11/26 11:23:42 by pfaria-d         ###   ########.fr       */
+/*   Updated: 2022/12/06 17:49:50 by pfaria-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,8 @@ int	ft_strlen(const char *str)
 
 int	ft_putchar_fd(char c, int fd)
 {
-	write(fd, &c, 1);
+	if ((unsigned char )c != 255)
+		write(fd, &c, 1);
 	return (1);
 }
 

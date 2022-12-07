@@ -6,7 +6,7 @@
 /*   By: pfaria-d <pfaria-d@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/25 17:54:27 by pfaria-d          #+#    #+#             */
-/*   Updated: 2022/12/06 13:32:51 by pfaria-d         ###   ########.fr       */
+/*   Updated: 2022/12/07 12:57:55 by pfaria-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,30 +22,20 @@ static void	siginfohandler(int sig)
 
 static void	charprinter(int sig, siginfo_t *siginfo, void *NUL)
 {
-	static unsigned char	c = 0;
-	static int				i = 0;
+	static int				c = 0;
+	static int				i = 1;
 	static pid_t			pid = 0;
 
-	pid = siginfo->si_pid;
 	(void)NUL;
+	pid = siginfo->si_pid;
 	if (sig == SIGUSR1)
+		c += 256;
+	c = c >> 1;
+	if (++i >= 9)
 	{
-		if (i == 0)
-			c += 1;
-		else
-			c += (2 * i);
-	}
-	if (i == 0)
-		i++;
-	else
-		i *= 2;
-	if (i == 128)
-	{
-		i = 0;
-		ft_printf("%c", c);
+		i = ft_printf("%c", c);
 		c = 0;
 	}
-	usleep(30);
 	kill(pid, SIGUSR1);
 }
 
