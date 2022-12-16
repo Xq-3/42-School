@@ -6,7 +6,7 @@
 /*   By: pfaria-d <pfaria-d@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/25 17:54:27 by pfaria-d          #+#    #+#             */
-/*   Updated: 2022/12/07 12:57:55 by pfaria-d         ###   ########.fr       */
+/*   Updated: 2022/12/16 13:38:05 by pfaria-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,16 +27,23 @@ static void	charprinter(int sig, siginfo_t *siginfo, void *NUL)
 	static pid_t			pid = 0;
 
 	(void)NUL;
-	pid = siginfo->si_pid;
+	if (!pid)
+		pid = siginfo->si_pid;
 	if (sig == SIGUSR1)
 		c += 256;
 	c = c >> 1;
 	if (++i >= 9)
 	{
-		i = ft_printf("%c", c);
+		if (c == 0)
+			pid = 0;
+		else
+			ft_printf("%c", c);
+		i = 1;
 		c = 0;
 	}
-	kill(pid, SIGUSR1);
+	usleep(70);
+	if (pid)
+		kill(pid, SIGUSR1);
 }
 
 int	main(void)

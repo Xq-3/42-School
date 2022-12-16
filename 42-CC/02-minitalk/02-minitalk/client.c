@@ -6,7 +6,7 @@
 /*   By: pfaria-d <pfaria-d@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/25 17:54:24 by pfaria-d          #+#    #+#             */
-/*   Updated: 2022/12/07 12:53:45 by pfaria-d         ###   ########.fr       */
+/*   Updated: 2022/12/16 13:50:50 by pfaria-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,20 +37,36 @@ static void	charsender(int pid, char *argv)
 		i = 8;
 		while (i--)
 		{
-			usleep(400);
+			usleep(70);
 			if ((tmp & 1))
 				kill(pid, SIGUSR1);
 			else
 				kill(pid, SIGUSR2);
 			tmp = tmp >> 1;
-			usleep(400);
+			pause();
 		}
 		x++;
 	}
 }
 
+static void	endofmsg(int pid)
+{
+	int	i;
+
+	i = 8;
+	charsender(pid, "\n");
+	while (i--)
+	{
+		usleep(200);
+		kill(pid, SIGUSR2);
+	}
+}
+
 int	main(int argc, char **argv)
 {
+	int	i;
+
+	i = 0;
 	if (argc != 3)
 	{
 		ft_printf("Unexpected number of arguments\n");
@@ -69,6 +85,6 @@ int	main(int argc, char **argv)
 	g_len = ft_strlen(argv[2]);
 	signal(SIGUSR1, charcounter);
 	charsender(ft_atoi(argv[1]), argv[2]);
-	charsender(ft_atoi(argv[1]), "\n");
+	endofmsg(ft_atoi(argv[1]));
 	return (0);
 }
